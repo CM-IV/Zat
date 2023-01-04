@@ -1,7 +1,8 @@
-use std::io::BufRead;
+use std::io::{Write, BufRead, BufReader};
 use clap::Parser;
 use color_eyre::eyre::Result;
 
+/// Search for a pattern in a file and display the lines that contain it.
 #[derive(Parser)]
 struct Cli {
     path: std::path::PathBuf,
@@ -10,11 +11,29 @@ struct Cli {
 fn main() -> Result<()> {
     let args = Cli::parse();
     let f = std::fs::File::open(args.path)?;
-    let reader = std::io::BufReader::new(f);
+    let reader = BufReader::new(f);
 
+    let stdout = std::io::stdout();
+    let mut stdout = stdout.lock();
+
+    let mut lines = Vec::new();
     for line in reader.lines() {
         let line = line?;
-        println!("{}", line);
+        lines.push(line);
+
+        if lines.len() == 100 {
+            
+            for line in &lines {
+                writeln!(stdout, "{}", line)?;
+            }
+            lines.clear();
+        }
+    }
+
+    if !lines.is_empty() {
+        for line in &lines {
+            writeln!(stdout, "{}", line).unwrap();
+        }
     }
 
     Ok(())
