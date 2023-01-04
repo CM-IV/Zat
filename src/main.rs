@@ -1,9 +1,11 @@
 use std::io::{Write, BufRead, BufReader};
-use clap::Parser;
+use clap::{Parser};
 use color_eyre::eyre::Result;
 
 #[derive(Parser)]
+#[clap(author, version, about)]
 struct Cli {
+    /// Filepath argument
     path: std::path::PathBuf,
 }
 
