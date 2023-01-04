@@ -2,7 +2,6 @@ use std::io::{Write, BufRead, BufReader};
 use clap::Parser;
 use color_eyre::eyre::Result;
 
-/// Search for a pattern in a file and display the lines that contain it.
 #[derive(Parser)]
 struct Cli {
     path: std::path::PathBuf,
