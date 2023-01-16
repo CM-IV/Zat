@@ -10,3 +10,12 @@ description = "Zat, an alternative to cat written in Rust"
 [dependencies]
 color-eyre = "0.6.2"
 clap = { version = "4.0", features = ["derive"] }
+
+# optimize for reasonable compile speed
+[profile.release]
+strip = "symbols"
+lto = "thin"
+opt-level = 3
+debug = 0
+overflow-checks = false
+panic = "abort"

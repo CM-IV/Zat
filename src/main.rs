@@ -33,7 +33,7 @@ fn main() -> Result<()> {
 
     if !lines.is_empty() {
         for line in &lines {
-            writeln!(stdout, "{}", line).unwrap();
+            writeln!(stdout, "{}", line)?;
         }
     }
 
